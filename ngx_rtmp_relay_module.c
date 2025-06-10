@@ -1680,14 +1680,32 @@ ngx_rtmp_relay_postconfiguration(ngx_conf_t *cf)
 
 
     ch = ngx_array_push(&cmcf->amf);
+    if (ch == NULL) {
+            ngx_conf_log_error(NGX_LOG_EMERG, cf, 0,
+                               "relay: failed to add amf handler");
+            return NGX_ERROR;
+    }
+
     ngx_str_set(&ch->name, "_result");
     ch->handler = ngx_rtmp_relay_on_result;
 
     ch = ngx_array_push(&cmcf->amf);
+    if (ch == NULL) {
+        ngx_conf_log_error(NGX_LOG_EMERG, cf, 0,
+                           "relay: failed to add amf handler");
+        return NGX_ERROR;
+    }
+    
     ngx_str_set(&ch->name, "_error");
     ch->handler = ngx_rtmp_relay_on_error;
 
     ch = ngx_array_push(&cmcf->amf);
+    if (ch == NULL) {
+        ngx_conf_log_error(NGX_LOG_EMERG, cf, 0,
+                           "relay: failed to add amf handler");
+        return NGX_ERROR;
+    }
+    
     ngx_str_set(&ch->name, "onStatus");
     ch->handler = ngx_rtmp_relay_on_status;
 
